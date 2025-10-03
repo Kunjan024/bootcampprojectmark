@@ -1,18 +1,18 @@
 options:
   logging: CLOUD_LOGGING_ONLY
-  
+
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/bootcampprojectmark/device-data-validator:latest', './Cloud Run']
+    args: ['build', '-t', 'us-docker.pkg.dev/bootcampprojectmark/gcr-io/device-data-validator:latest', './Cloud Run']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/bootcampprojectmark/device-data-validator:latest']
+    args: ['push', 'us-docker.pkg.dev/bootcampprojectmark/gcr-io/device-data-validator:latest']
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args: [
       'run', 'deploy', 'device-data-validator',
-      '--image', 'gcr.io/bootcampprojectmark/device-data-validator:latest',
+      '--image', 'us-docker.pkg.dev/bootcampprojectmark/gcr-io/device-data-validator:latest',
       '--region', 'us-central1',
       '--allow-unauthenticated'
     ]
 images:
-  - 'gcr.io/bootcampprojectmark/device-data-validator:latest'
+  - 'us-docker.pkg.dev/bootcampprojectmark/gcr-io/device-data-validator:latest'
