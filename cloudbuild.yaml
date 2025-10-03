@@ -3,7 +3,7 @@ options:
   
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/bootcampprojectmark/device-data-validator:latest', '.']
+    args: ['build', '-t', 'gcr.io/bootcampprojectmark/device-data-validator:latest', './Cloud Run']
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/bootcampprojectmark/device-data-validator:latest']
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -16,4 +16,3 @@ steps:
     ]
 images:
   - 'gcr.io/bootcampprojectmark/device-data-validator:latest'
-
