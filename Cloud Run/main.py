@@ -1,6 +1,13 @@
 from flask import Flask, request, jsonify
 
+
 app = Flask(__name__)
+
+
+@app.route('/', methods=['GET'])
+def hello():
+    return "Validator app running", 200
+
 
 @app.route('/', methods=['POST'])
 def validate():
@@ -12,6 +19,7 @@ def validate():
             return jsonify({"error": "Missing fields"}), 400
     except Exception:
         return jsonify({"error": "Invalid JSON"}), 400
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
