@@ -1,25 +1,13 @@
-from flask import Flask, request, jsonify
+import base64
+import json
 
-
-app = Flask(__name__)
-
-
-@app.route('/', methods=['GET'])
-def hello():
-    return "Validator app running - Staging", 200
-
-
-@app.route('/', methods=['POST'])
-def validate():
+def validate_pubsub(event, context):
     try:
-        data = request.get_json(force=True)
+        pubsub_message = base64.b64decode(event['data']).decode('utf-8')
+        data = json.loads(pubsub_message)
         if "device_id" in data and "timestamp" in data:
-            return jsonify({"status": "valid"}), 200
+            print(json.dumps({"status": "valid"}))
         else:
-            return jsonify({"error": "Missing fields"}), 400
+            print(json.dumps({"error": "Missing fields"}))
     except Exception:
-        return jsonify({"error": "Invalid JSON"}), 400
-
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+        print(json.dumps({"error": "Invalid JSON"}))
