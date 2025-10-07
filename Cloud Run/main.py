@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def hello():
-    return "Validator app running", 200
+    return "Validator app running - Development", 200
 
 
 @app.route('/', methods=['POST'])
