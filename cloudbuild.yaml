@@ -3,16 +3,23 @@ options:
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-docker.pkg.dev/bootcampprojectmark/gcr-io/device-data-validator:latest', './Cloud Run']
+    args: [
+      'build',
+      '-t', 'us-docker.pkg.dev/bootcampprojectmark/gcr-io/device-data-validator:${BRANCH_NAME}',
+      './Cloud Run'
+    ]
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-docker.pkg.dev/bootcampprojectmark/gcr-io/device-data-validator:latest']
+    args: [
+      'push',
+      'us-docker.pkg.dev/bootcampprojectmark/gcr-io/device-data-validator:${BRANCH_NAME}'
+    ]
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args: [
-      'run', 'deploy', 'device-data-validator',
-      '--image', 'us-docker.pkg.dev/bootcampprojectmark/gcr-io/device-data-validator:latest',
+      'run', 'deploy', 'device-data-validator-${BRANCH_NAME}',
+      '--image', 'us-docker.pkg.dev/bootcampprojectmark/gcr-io/device-data-validator:${BRANCH_NAME}',
       '--region', 'us-central1',
       '--allow-unauthenticated'
     ]
 images:
-  - 'us-docker.pkg.dev/bootcampprojectmark/gcr-io/device-data-validator:latest'
+  - 'us-docker.pkg.dev/bootcampprojectmark/gcr-io/device-data-validator:${BRANCH_NAME}'
